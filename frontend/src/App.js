@@ -8,7 +8,8 @@ import axios from 'axios';
 function App() {
   const today = new Date()
   const formatted_today = today.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([])
+  const [showNewTask, setShowNewTask] = useState()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,10 @@ function App() {
               <Task task={task}/>
             </ListGroup.Item>
             )}
+          {showNewTask &&
+          <ListGroup.Item>
+            <Task task={{ title: "Edit title...", description: "Edit description...", completed: false }} />
+          </ListGroup.Item> } 
         </ListGroup>
       </Modal.Body>
 
@@ -43,7 +48,9 @@ function App() {
           Clear all
         </Button>
         <Button 
-          variant="outline-primary">
+          variant="outline-primary"
+          onClick={() => setShowNewTask(!showNewTask)}
+          >
           +
         </Button>
       </Modal.Footer>
